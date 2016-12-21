@@ -15,7 +15,7 @@ The below document provides the R code that was used to generate the output alon
 #### Loading and preprocessing data
 The below code loads the required libraries and the data from the source files. On reading the data, it converts the date column from Character to Date type. 
 
-```{r}
+```{r load}
 ## Load the required libraries
 library(reshape2)
 library(ggplot2)
@@ -30,7 +30,7 @@ activity$date <- as.Date(activity$date)
 
 #### What is the mean total number of steps taken per day?
 The below code calculates the total number of steps taken per day and then displays a histogram of the same.
-```{r}
+```{r quest1, fig.path="figure/"}
 ## Determine the total number of steps taken per day
 totalSteps <- tapply(activity$steps, activity$date, sum)
 ## Display a histogram of the total number of steps taken each day
@@ -43,7 +43,7 @@ Median of Total Steps taken per day **`r as.integer(median(totalSteps, na.rm = T
 
 #### What is the average daily activity pattern?
 The below code calculates the average number of steps in each 5-minute interval by ignoring the NA values. It then displays a time-series plot of the 5-min interval and the average number of steps taken, averaged across all days.
-```{r}
+```{r quest2, fig.path="figure/"}
 ## Determine the average number of steps per interval
 intervalSteps <- tapply(activity$steps, activity$interval, mean, na.rm = TRUE)
 ## Plot the average number of steps per interval
@@ -68,7 +68,7 @@ for(i in 1:nrow(imputed))
 }
 ```
 The below code creates a histogram of the imputed values.
-```{r}
+```{r quest3, fig.path="figure/"}
 totalImpSteps <- tapply(imputed$steps, imputed$date, sum)
 hist(totalImpSteps, xlab = "Total Steps Per Day", main = "Histogram of Total Steps")
 ```
@@ -79,7 +79,7 @@ There is not much impact on the mean and median of the data post imputation.
 
 #### Are there differences between activity patterns between weekdays and weekends?
 The below code identifies if there are differences between the activity pattern for weekdays and weekends.
-```{r}
+```{r quest4, fig.path="figure/"}
 ## Create a new factor variable indicating if the day is a weekend or weekday
 imputed$day <- "weekend"
 for(i in 1:nrow(imputed))
